@@ -1,0 +1,87 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+
+\newcommand{\Trans}{\mathcal{T}}
+\newcommand{\filterationF}{\mathcal{F}}
+
+\parindent=0pt
+\parskip=1.5ex
+
+\begin{document}
+	
+\section{Garch Model}
+
+\paragraph{Notation}
+\begin{itemize}
+	\item $X_t$: rate/price of a risk factor
+	\item $r_t$: return of $X_t$ over a horizon (e.g.\ 1 day or 10 days):
+	\begin{equation}
+	r_t = \Trans(X_t) - \Trans(X_{t-1})
+	\end{equation}
+	for a transformation function $\Trans$, either $\Trans(x) = x$ or $\Trans(x) = \ln(x)$. 
+\end{itemize}
+
+\paragraph{Model Specification}
+
+GARCH(1,1) process:
+\begin{eqnarray}
+r_t & = & \mu - \frac{\xi}{2}\sigma_t^2 + \sigma_t\epsilon_t \\
+\sigma_t^2 & = & \sigma_\infty^2(1-\beta-\gamma) + \beta \sigma_{t-1}^{2} + \gamma \sigma_{t-1}^{2}\epsilon_t^2
+\end{eqnarray}
+where
+\begin{equation}
+\epsilon_t \sim N(0,1), \quad \textrm{i.i.d.},
+\end{equation}
+\begin{equation}
+\beta \ge 0, \quad \gamma \ge 0, \quad \beta+\gamma = 1,
+\end{equation}
+and 
+\begin{equation}
+\xi = \left\{
+\begin{array}{ccl}
+0 & \textrm{ for } & \Trans(x) = x \\
+1 & \textrm{ for } & \Trans(x) = \ln(x) \\
+\end{array}
+\right.
+\end{equation}
+
+\paragraph{Observations}
+
+The GARCH volatility $\sigma_t$ is mean-reverting:
+\begin{equation}
+\sigma_t^2 - \sigma_{t-1}^2 = (1-\beta-\gamma)(\sigma_\infty^2 - \sigma_{t-1}^2) + \gamma \sigma_{t-1}^2 (\epsilon_{t}^2 - 1)
+\end{equation}
+
+Expected spot variance at future time: 
+\begin{eqnarray}
+\bar\sigma^2_{t}(\tau) & :=& E\left[\sigma_{t+\tau}^2 | \filterationF_t\right] \nonumber\\
+& = & \sigma_\infty^2 + (\beta + \gamma)^{\tau-1}(\sigma_{t+1}^2 - \sigma_{\infty}^2)
+\label{eqn:future-spot-vol}
+\end{eqnarray}
+
+\section{Application: Manufacturing (Implied) Volatility Curve}
+
+Expected spot variance over tenor $\tau$: 
+\begin{eqnarray}
+\bar\nu^2_{t}(\tau) & := & \frac{1}{\tau} \sum_{n=1}^{\tau} \bar\sigma^2_{t}(n) \nonumber\\
+& = & \sigma_{\infty}^2 + \frac{1-(\beta+\gamma)^\tau}{1-(\beta+\gamma)} \frac{\sigma^2_{t+1}-\sigma^2_{\infty}}{\tau}
+\label{eqn:future-spot-vol}
+\end{eqnarray}
+
+Proxy the ATM implied volatility at tenor $\tau$ on date $t$ by $\bar\nu_t(\tau)$. 
+
+\section{Process}
+
+\subsection{Parameter Calibration}
+
+Input: Time series of $X_t$. 
+
+Standard MLE. But, a 
+
+	
+\end{document}

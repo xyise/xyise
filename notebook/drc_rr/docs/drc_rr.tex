@@ -1,0 +1,95 @@
+\documentclass[12pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex}
+\usepackage{url}
+\newcommand{\glb}{\mathrm{glb}}
+
+\begin{document}
+
+\title{On Recovery Rate Model per DRC}
+
+\section{Reflection}
+
+
+{\em What didn't go right}: From the model, we have $G^i$, the systematic factor for issuer $i$. At the same time, we have CDS-based times series $\{G^i_n\}$ used to calibrate the default correlation structures. The {\em mistakes} we had in past versions are
+\begin{itemize}
+    \item treating the CDS-based time series as some data that can reflect the economical condition. The quantities are the changes of CDS levels. One could have 
+    \item by intersecting the CDS data with the Moody's data, we had to ignore a large amount of data prior to 2005.  
+    \item missing the point that the factor variable $G$ is an abstract variable. It can be interpreted differently in the recovery rate model calibration. In particular, I was not free to think that we can separate the correlation model and recovery model. In other words, 
+    \begin{itemize}
+        \item CDS data are {\em just} for correlation model
+        \item Moody's data are {\em just} for recovery rate model
+    \end{itemize}
+\end{itemize}
+
+
+\section{Recollection}
+
+
+Regulatory {\em Guidelines on LGD Estimates}: 
+\url{https://eba.europa.eu/sites/default/documents/files/documents/10180/2551996/f892da33-5cb2-44f8-ae5d-68251b9bab8f/Final%20Report%20on%20Guidelines%20on%20LGD%20estimates%20under%20downturn%20conditions.pdf?retry=1}
+
+\subsection{On LGDs}
+
+\begin{itemize}
+    \item Recall that we are supposed to consume the LGDs coming from Credit. 
+    \begin{itemize}
+        \item For sovereigns, where the firm have the largest exposures, they seem to calculate LGDs as part of IRB, in fact,{\em downturn} LGDs.
+        \item For large corps, they have both through-the-cycle and downturn LGDs.
+    \end{itemize}
+    \item As JK clearly articulated, the fall-back LGD method described in the current methodology would lead to closer to downturn LGDs. This is because there would be a number number of default positions during stressed periods, so taking the average over a long term means that the estimate is biased to the recovery rates from stressed periods. 
+    \item The project team proposes to use the F-IRB method to provide fall-back LGDs. Interestingly, the LGD for typical unsecured senior positions under F-IRB is 40\%. This is much lower than the standard 40\% LGD level used in other areas such as CDS valuations. 
+    
+    If 60\% is not a mistake (despite it has been the case for many years), it is certainly not a downturn LGDs. 
+
+    We have yet to find out whether the project team has spoken to Credit on F-IRB in depth. 
+\end{itemize}
+
+\subsection{On PDs}
+
+\begin{itemize}
+    \item PDs should be estimated per issuer based on its credit situation {\em as of now}. Indeed, there is no concept of downturn PDs in the regulatory guide. 
+    \item The fall-back PD method in the current methodology is calculated by averaging the annual default ratios over a long period by rating. The expectation is that the rating information for each issuer is fully up-to-dated to reflect the current credit quality. 
+\end{itemize}
+
+
+
+\subsection{On Moody's data}
+
+We can derive the following quantities from the Moody's default historical data from circa 1900:
+\begin{itemize}
+    \item $\{p_n\}$: 
+    \begin{itemize}
+        \item annual default ratio (DR) = (num of defaults)/(num of issuers)
+        \item varying between 0.5\% and 5.5\%
+    \end{itemize}
+    \item $\{r_n\}$: 
+    \begin{itemize}
+        \item anuual average recovery rates of those defaulted names
+        \item varying between 20\% and 70\%. 
+    \end{itemize}
+\end{itemize}
+$p_n$ and $r_n$ are visibly opposite to each other. When $p_n$ is high, $r_n$ is low, and vice versa. JK produced a nice time series plot and this should be included in the methodology doc. 
+
+Notes:
+\begin{itemize}
+    \item $p_n$ can be thought to represent the economic condition. Higher it is, more stressed the economy is. 
+    \item Whilst $r_n$ is inversely related to $p_n$, it is not perfectly. So, we would have something like
+    \begin{equation}
+        r \sim a p + b + \sigma \epsilon
+    \end{equation}
+    where $a$ would be a negative number. 
+    \item At the issuer level, we have to consider an additional idiosyncratic factor as well. 
+    \begin{equation}
+        r^i \sim ap + b + \sigma \epsilon + \eta^i \epsilon^i
+    \end{equation}
+\end{itemize}
+
+    
+
+
+
+
+
+\end{document}
