@@ -1,5 +1,9 @@
 ### Hi there 👋
 
+Welcome to my collection of things..
+
+Also, [see here](https://xyise.github.io/about/)
+
 <!--
 **xyise/xyise** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
