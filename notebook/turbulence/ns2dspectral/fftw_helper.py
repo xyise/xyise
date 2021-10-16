@@ -34,6 +34,11 @@ class FFTW_base():
 
 
 class FFTW_RFFT2D(FFTW_base):
+    """FFTW helper. Real FFT2D
+
+    Args:
+        FFTW_base (class): base class
+    """
 
     def __init__(self, Nx, Ny, planner_effort='FFTW_ESTIMATE', threads=None):
         FFTW_base.__init__(self)
@@ -46,6 +51,11 @@ class FFTW_RFFT2D(FFTW_base):
         self._out = self._p()
 
 class FFTW_IRFFT2D(FFTW_base):
+    """FFTW helper, Real inverse FFT2D
+
+    Args:
+        FFTW_base (class): base class
+    """
 
     def __init__(self, Nx, Ny, planner_effort='FFTW_ESTIMATE', threads=None):
         FFTW_base.__init__(self)
