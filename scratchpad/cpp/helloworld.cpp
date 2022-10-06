@@ -1,20 +1,30 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <math.h>
+
 
 using namespace std;
 
 int main()
 {
-    int x = 4;
-    int y = 5;
-    vector<double> v{2.0, 3.0, 4.0};
 
-    int arr[] = {10, 20, 30};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    double a1 = 1.1;
+    double a2 = 0.1;
+    double a = a1 + a2; 
+    double b = 1.2;
 
-    vector<int> vect(arr, arr + n); 
-    for (int x : vect)
-        cout << x << " ";
-    cout << "Hello World" << endl;
+    if (abs(a - b) < 1.0e-12)
+    {
+        cout << "Yes" << endl;
+    }
+    else
+    {
+        cout << "No" << endl;
+    }
+
+    // vector<int> vect(arr, arr + n); 
+    // for (int x : vect)
+    //     cout << x << " ";
+    // cout << "Hello World" << endl;
 }
