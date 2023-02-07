@@ -1,8 +1,4 @@
-import warnings
 import numpy as np
-from numpy.lib.function_base import meshgrid
-from numpy.ma.core import get_fill_value
-from scipy.integrate import RK45
 
 from .fftw_helper import FFTW_RFFT2D, FFTW_IRFFT2D
 
@@ -16,7 +12,7 @@ _MAX_VISCOSITY_FACTOR_EXPONENT_ = np.log(1.0e5)
 
 
 class NS2dSpectral:
-    def __init__(self, Lx, Ly, Mx, My, nu = 1e-5, hyper_vis_order = 1,
+    def __init__(self, Lx, Ly, Mx, My, nu=1e-5, hyper_vis_order=1,
                  use_fftw=True, Mx_da=None, My_da=None, **kwargs):
 
         if (Mx % 2 != 0) | (My % 2 != 0):
@@ -247,25 +243,18 @@ class NS2dSpectral:
 
     def get_uv_from_psi(self, mtx_psi):
         mtx_psi_k = self.fft2d(mtx_psi)
-        u = self.ifft2d( mtx_psi_k * self.mtx_iky)
+        u = self.ifft2d(mtx_psi_k * self.mtx_iky)
         v = self.ifft2d(-mtx_psi_k * self.mtx_ikx)
         return u, v
 
-    def get_cfl_number(self, mtx_vor_k):
-        mtx_psi_k = self.get_psi_k(mtx_vor_k)
-        u = self.ifft2d( mtx_psi_k * self.mtx_iky)
-        v = self.ifft2d(-mtx_psi_k * self.mtx_ikx)
-
-        C = self.dt_step * (np.max(np.abs(u))/self.dx +
-                            np.max(np.abs(v))/self.dy)
-        return C
-
     def get_energy(self, mtx_vor_k):
         # since mtx_vor_k is defined in the half domain, we need to inclue
-        # additional factor 2. 
-        E = self.Lx * self.Ly / (self.Mx**2 * self.My **2)
+        # additional factor 2.
+        E = self.Lx * self.Ly / (self.Mx**2 * self.My ** 2)
         E *= np.sum(np.abs(mtx_vor_k)**2 * self.mtx_k2_inv)
         return E
+
+
 def get_num_nonnegative_freqs(M):
     return (M-1)//2 + 1
 

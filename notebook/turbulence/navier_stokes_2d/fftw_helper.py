@@ -1,6 +1,7 @@
 import numpy as np
 import pyfftw
 
+
 class FFTW_base():
 
     def __init__(self):
@@ -8,7 +9,7 @@ class FFTW_base():
         self._in = None
         self._out = None
         self._p = None
-        
+
     def run(self, data_in=None, copy=True, data_out=None):
 
         if data_in is not None:
@@ -16,7 +17,7 @@ class FFTW_base():
 
         self._out = self._p()
         if data_out is None:
-            if copy: 
+            if copy:
                 return np.array(self._out)
             else:
                 return self._out
@@ -28,7 +29,7 @@ class FFTW_base():
     def ref_in(self):
         return self._in
 
-    @property    
+    @property
     def ref_out(self):
         return self._out
 
@@ -46,9 +47,10 @@ class FFTW_RFFT2D(FFTW_base):
         self.Nx = Nx
         self.Ny = Ny
 
-        self._in = pyfftw.empty_aligned((Ny, Nx), dtype='float64')        
+        self._in = pyfftw.empty_aligned((Ny, Nx), dtype='float64')
         self._p = pyfftw.builders.rfft2(self._in, planner_effort=planner_effort, threads=threads)
         self._out = self._p()
+
 
 class FFTW_IRFFT2D(FFTW_base):
     """FFTW helper, Real inverse FFT2D
@@ -63,6 +65,6 @@ class FFTW_IRFFT2D(FFTW_base):
         self.Nx = Nx
         self.Ny = Ny
 
-        self._in = pyfftw.empty_aligned((Ny, Nx//2+1), dtype='complex128')        
+        self._in = pyfftw.empty_aligned((Ny, Nx//2+1), dtype='complex128')
         self._p = pyfftw.builders.irfft2(self._in, planner_effort=planner_effort, threads=threads)
         self._out = self._p()

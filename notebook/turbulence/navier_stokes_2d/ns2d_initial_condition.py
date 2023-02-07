@@ -3,10 +3,12 @@ import numpy as np
 _2PI_ = np.pi * 2
 _PI_ = np.pi
 
+
 def _get_x_y_mtx(Lx, Ly, Mx, My):
     v_x, v_y = np.arange(Mx)/Mx*Lx, np.arange(My)/My*Ly
     mtx_x, mtx_y = np.meshgrid(v_x, v_y)
     return mtx_x, mtx_y
+
 
 def _get_kx_ky_mtx(Lx, Ly, Mx, My, real_x=True):
 
@@ -18,13 +20,15 @@ def _get_kx_ky_mtx(Lx, Ly, Mx, My, real_x=True):
 
     return np.meshgrid(v_kx, v_ky)
 
-_logistic_der = lambda x: 4.0 * np.exp(-x) / (1+np.exp(-x))**2
-_bell2 = lambda x: 1.0 / (1 + x**2)
 
-def init_kevin_helmoltz_vorticity_periodic(Lx=_2PI_, Ly=_2PI_, 
-        Mx=256, My=256, amp = 0.25, freq = 3, 
-        inner_flow_width = _PI_,
-        transition_width=_2PI_/200):
+def _logistic_der(x): return 4.0 * np.exp(-x) / (1+np.exp(-x))**2
+def _bell2(x): return 1.0 / (1 + x**2)
+
+
+def init_kevin_helmoltz_vorticity_periodic(Lx=_2PI_, Ly=_2PI_,
+                                           Mx=256, My=256, amp=0.25, freq=3,
+                                           inner_flow_width=_PI_,
+                                           transition_width=_2PI_/200):
 
     mtx_x, mtx_y = _get_x_y_mtx(Lx, Ly, Mx, My)
 
@@ -33,13 +37,15 @@ def init_kevin_helmoltz_vorticity_periodic(Lx=_2PI_, Ly=_2PI_,
     mtx_ca = np.abs(mtx_c)
     g = inner_flow_width / 2.0
     w = transition_width
-    mtx_vor = _2PI_ * (1 + amp * np.cos(freq*(mtx_x + _PI_/4*np.sign(mtx_c)))) * _logistic_der((mtx_ca-g)/w) * np.sign(mtx_c)
+    mtx_vor = _2PI_ * (1 + amp * np.cos(freq*(mtx_x + _PI_/4*np.sign(mtx_c)))) * \
+        _logistic_der((mtx_ca-g)/w) * np.sign(mtx_c)
     mtx_vor -= np.mean(mtx_vor)
 
     return mtx_vor
 
+
 def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
-        Mx=256, My=256, amp=1.0, k0=50, dkx=10):
+                         Mx=256, My=256, amp=1.0, k0=50, dkx=10):
 
     mtx_x, mtx_y = _get_x_y_mtx(Lx, Ly, Mx, My)
     mtx_kx, mtx_ky = _get_kx_ky_mtx(Lx, Ly, Mx, My, True)
@@ -47,8 +53,8 @@ def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
 
     mtx_vor_k = np.random.standard_normal(mtx_k.shape) + 1j * np.random.standard_normal(mtx_k.shape)
     # remove mean as vorticity, and remove Nyquists.
-    mtx_vor_k[0,0] = 0.0
-    mtx_vor_k[Mx//2,:] = 0.0
+    mtx_vor_k[0, 0] = 0.0
+    mtx_vor_k[Mx//2, :] = 0.0
     mtx_vor_k[:, My//2] = 0.0
 
     mtx_vor_k *= _bell2((mtx_k-k0)/dkx)
@@ -75,7 +81,7 @@ def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
 #     # ensemble variance proportional to the prescribed scalar wavenumber function
 #     ck = np.zeros((nx, nk))
 #     ck[fk] = (np.sqrt(k2[fk])*(1+(k2[fk]/36)**2))**(-1)
-    
+
 #     # Gaussian random realization for each of the Fourier components of psi
 #     psih = np.random.randn(nx, nk)*ck+\
 #             1j*np.random.randn(nx, nk)*ck
@@ -90,12 +96,10 @@ def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
 
 #     # inverse Laplacian in k-space
 #     wh = k2 * psi
-    
+
 #     # vorticity in physical space
 #     field = np.fft.irfft2(wh)
 #     return field
-
-
 
     # def get_sample_init(self, example = 'cos'):
 
@@ -143,7 +147,6 @@ def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
 #mtx_vor = ns2d.get_vor_from_uv(mtx_u, mtx_v)
 
 
-
 # def _spec_variance(ph):
 #     # only half the spectrum for real ffts, needs spectral normalisation
 #     nx, nk = ph.shape
@@ -173,7 +176,7 @@ def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
 #     # ensemble variance proportional to the prescribed scalar wavenumber function
 #     ck = np.zeros((nx, nk))
 #     ck[fk] = (np.sqrt(k2[fk])*(1+(k2[fk]/36)**2))**(-1)
-    
+
 #     # Gaussian random realization for each of the Fourier components of psi
 #     psih = np.random.randn(nx, nk)*ck+\
 #             1j*np.random.randn(nx, nk)*ck
@@ -188,7 +191,7 @@ def init_random_periodic(Lx=_2PI_, Ly=_2PI_,
 
 #     # inverse Laplacian in k-space
 #     wh = k2 * psi
-    
+
 #     # vorticity in physical space
 #     field = np.fft.irfft2(wh)
 #     return field

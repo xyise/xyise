@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "xyise"
+version = "0.1.0"
+description = ""
+authors = ["Youngsuk Lee <lee.youngsuk@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+pre-commit = "^3.0.4"
+nbconvert = "^7.2.9"
+numpy = "^1.24.2"
+pyfftw = "^0.13.1"
+flake8 = "^5.0.0"
+autopep8 = "^1.0.0"
+scipy = "^1.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
