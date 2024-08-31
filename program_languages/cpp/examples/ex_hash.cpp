@@ -24,16 +24,16 @@ struct Person {
 };
 
 int main() {
-    std::unordered_map<Person, std::string, std::hash<Person>, std::equal_to<Person>> personMap;
+    // std::unordered_map<Person, std::string, std::hash<Person>, std::equal_to<Person>> personMap;
 
-    Person p1{"John", 25};
-    Person p2{"Jane", 30};
+    // Person p1{"John", 25};
+    // Person p2{"Jane", 30};
 
-    personMap[p1] = "John's entry";
-    personMap[p2] = "Jane's entry";
+    // personMap[p1] = "John's entry";
+    // personMap[p2] = "Jane's entry";
 
-    std::cout << "Value associated with p1: " << personMap[p1] << std::endl;
-    std::cout << "Value associated with p2: " << personMap[p2] << std::endl;
+    // std::cout << "Value associated with p1: " << personMap[p1] << std::endl;
+    // std::cout << "Value associated with p2: " << personMap[p2] << std::endl;
 
     return 0;
 }

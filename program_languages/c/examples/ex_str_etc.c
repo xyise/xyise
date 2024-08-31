@@ -377,6 +377,25 @@ void strstr_ex()
     printf("s2: %s\n", s2);
 }
 
+void strcmp_ex()
+{
+    char s1[] = "Hello";
+    char s2[] = "Hello";
+    int res = strcmp(s1, s2);
+    printf("res: %d\n", res);
+
+    char s3[] = "Hello";
+    char s4[] = "Hello   ";
+    int res2 = strcmp(s3, s4);
+    printf("res2: %d\n", res2);
+
+    char s5[] = "Hello   ";
+    char s6[] = "Hello";
+    int res3 = strcmp(s5, s6);
+    printf("res3: %d\n", res3);
+
+}
+
 int main()
 {
 
@@ -398,8 +417,9 @@ int main()
     // strdup_ex();
     // sprintf_ex1();
     // void_pointer_ex();
-    sscanf_ex();
+    // sscanf_ex();
     // str_array_len_ex();
-    //strstr_ex();
+    // strstr_ex();
+    strcmp_ex();
     return 0;
 }
