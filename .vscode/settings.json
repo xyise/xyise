@@ -57,6 +57,10 @@
         "complex": "cpp",
         "map": "cpp",
         "iomanip": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "cstring": "cpp",
+        "span": "cpp",
+        "list": "cpp",
+        "format": "cpp"
     }
 }
